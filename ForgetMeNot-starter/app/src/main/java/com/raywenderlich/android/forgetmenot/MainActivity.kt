@@ -36,15 +36,17 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-
+import android.content.Intent
 
 class MainActivity : AppCompatActivity() {
 
   private val taskList: MutableList<String> = mutableListOf()
   private val adapter by lazy { makeAdapter(taskList) }
+  private val ADD_TASK_REQUEST = 1
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
     setContentView(R.layout.activity_main)
 
     taskListView.adapter = adapter
@@ -53,6 +55,8 @@ class MainActivity : AppCompatActivity() {
   }
 
   fun addTaskClicked(view: View) {
+    val intent = Intent(this, TaskDescriptionActivity::class.java)
+    startActivityForResult(intent, ADD_TASK_REQUEST)
 
   }
 
