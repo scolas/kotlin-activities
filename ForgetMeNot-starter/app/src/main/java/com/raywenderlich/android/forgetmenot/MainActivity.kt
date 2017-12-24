@@ -30,6 +30,7 @@
 
 package com.raywenderlich.android.forgetmenot
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -53,6 +54,22 @@ class MainActivity : AppCompatActivity() {
 
     taskListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id -> }
   }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // 1
+        if (requestCode == ADD_TASK_REQUEST) {
+            // 2
+            if (resultCode == Activity.RESULT_OK) {
+                // 3
+                val task = data?.getStringExtra(TaskDescriptionActivity.EXTRA_TASK_DESCRIPTION)
+                task?.let {
+                    taskList.add(task)
+                    // 4
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }
+    }
+
 
   fun addTaskClicked(view: View) {
     val intent = Intent(this, TaskDescriptionActivity::class.java)
